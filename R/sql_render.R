@@ -2,7 +2,8 @@
 #'
 #' Read SQL and substitute parameters
 #'
-#' @param sql connection object or character; Path to \code{SQL} file.
+#' @param sql character or connection object; Can be path to \code{SQL} file,
+#' raw SQL or a connection object.
 #'
 #' @param data environment, list or named vector. Locations to search for values
 #' to substitute into the query. Default: parent.frame
@@ -15,7 +16,10 @@
 #' @param strip.comments logical; whether to strip comments from sql;
 #' Default: TRUE
 #'
-#' Reads in a SQL statements, renders it using \code{whisker}.
+#' Reads in a SQL statements, renders it using \code{whisker}. If \code{sql} is
+#' character that matches a file on the file system this is read, otherwise
+#' \code{character} is taken a a literal statement. \code{sql} can also be a
+#' connection object.
 #'
 #' Strips tags, renders variables and returns the variable
 #'
@@ -50,11 +54,13 @@ sql_render <-function(
 ) {
 
   # Create one
+  if( is.character(sql) && file.exists(sql) )
+    sql <- Reduce( paste, paste0( readLines( sql ), "\n" ) )
   if( is.character(sql) )
     sql <- Reduce( paste, paste0( sql ) ) else
   if( is(sql, "connection") )
     sql <- Reduce( paste, paste0( readLines( sql ), "\n" ) ) else
-    stop( "sql is neither type character or a connection object.")
+  stop( "sql is neither type character or a connection object.")
 
 
   sql <- gsub( "\\/\\*.*?\\*\\/", "", sql)  # strip comments
