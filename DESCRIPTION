@@ -1,0 +1,15 @@
+Package: sql.template
+Title: Light-weight, simple, mustache-based SQL templating solutions
+Version: 0.1
+Authors@R: "Christopher Brown <chris.brown@decisionpatterns.com> [aut, cre]"
+Description: Provides a very simple-to-use SQL templating system based on
+    mustache (whisker) templates. SQL templates are syntactically, correct SQL
+    and can be executed as-is or rendered programmatically. In many cases, this
+    allows shared SQL queries between R and other other developers such as DBAs.
+    Little burden is placed on SQL authors for writing the templates.
+Depends:
+    R (>= 3.1.0)
+License: GPL-2
+LazyData: true
+Suggests:
+    testthat
