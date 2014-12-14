@@ -52,7 +52,7 @@ sql_render <-function(
   # Create one
   if( is.character(sql) )
     sql <- Reduce( paste, paste0( sql ) ) else
-  if( is.connection(sql) )
+  if( is(sql, "connection") )
     sql <- Reduce( paste, paste0( readLines( sql ), "\n" ) ) else
     stop( "sql is neither type character or a connection object.")
 
