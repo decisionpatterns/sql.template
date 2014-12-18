@@ -6,7 +6,8 @@
 #' raw SQL or a connection object.
 #'
 #' @param data environment, list or named vector. Locations to search for values
-#' to substitute into the query. Default: parent.frame
+#' to substitute into the query. The default, \code{NULL} finds the names from
+#' the call stack.
 #'
 #' @param render logical; whether to make a template replacement using
 #' \code{whisker.render} (DEFAULT:TRUE)
@@ -34,6 +35,7 @@
 #' @examples
 #'
 #'   sql = "select * from {{table}}"
+#'   table = "table1"
 #'   sql_render( sql )
 #'
 #'   table = "table_1"
@@ -46,11 +48,13 @@
 #'   }
 #'
 # @import whisker
+#' @import whisker.tools
+#' @import whisker
 #' @export
 
 
 sql_render <-function(
-    sql, data=parent.frame(), tags="r", strip.comments = TRUE,  render=TRUE
+    sql, data=NULL, tags="r", strip.comments = TRUE,  render=TRUE
 ) {
 
   # Create one
@@ -74,7 +78,9 @@ sql_render <-function(
 
   if( render ) {
     sql <- gsub( "--r:", "", sql )
-    sql <- whisker::whisker.render( sql, data=data )
+    if( is.null(data) )
+      sql <- whisker::whisker.render( sql, data=whisker.tools::whisker_get_all(sql, envir=parent.frame() ) ) else
+      sql <- whisker::whisker.render( sql, data=data )
   }
 
   return(sql)
