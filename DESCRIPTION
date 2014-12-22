@@ -1,6 +1,6 @@
 Package: sql.template
 Title: Light-weight, simple, mustache-based SQL templating solutions
-Version: 0.4
+Version: 0.4.1
 Date: 2014-12-22
 Authors@R: "Christopher Brown <chris.brown@decisionpatterns.com> [aut, cre]"
 Description: Provides a very simple-to-use SQL templating system based on

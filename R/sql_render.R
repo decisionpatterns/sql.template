@@ -47,11 +47,12 @@
 #'     sql %>% sql_render( c( table = "table4" ) )
 #'   }
 #'
-# @import whisker
 #' @import whisker.tools
-#' @import whisker
 #' @export
 
+# NOTE: It might be tempting to put data=parent.frame, the problem is that
+#       whisker::whisker.render does not search the call stack this should
+#       be done.
 
 sql_render <-function(
     sql, data=NULL, tags="r", strip.comments = TRUE,  render=TRUE
@@ -77,8 +78,8 @@ sql_render <-function(
 
   if( render ) {
     sql <- gsub( "--r:", "", sql )
-    if( is.null(data) )
-      sql <- whisker::whisker.render( sql, data=whisker.tools::whisker_get_all(sql, envir=parent.frame(4) ) ) else
+    if( is.null(data) ) {
+      sql <- whisker::whisker.render( sql, data=whisker.tools::whisker_get_all(sql, envir=parent.frame()) ) } else
       sql <- whisker::whisker.render( sql, data=data )
   }
 

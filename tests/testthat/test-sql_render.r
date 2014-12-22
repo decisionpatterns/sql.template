@@ -27,11 +27,10 @@ library(testthat)
 # NOTE: THIS FAILS UNDER testthat, but works
   if( exists('tmpl') ) rm(tmpl)
   tmpl <- "select * from {{TABLE}} --r: where ROWNUM <= {{ROWS}}"
-  TABLE <- "table_4"
+  TABLE <- "t4"
   ROWS <- 4
-  # sql <- sql_render( tmpl )
-  # expect_identical( sql, 'select * from table_4  where ROWNUM <= 4' )
-
+  sql <- sql_render( tmpl )
+  expect_identical( sql, 'select * from t4  where ROWNUM <= 4' )
 
 # FROM search path
   rm( TABLE, ROWS, tmpl )
@@ -41,17 +40,24 @@ library(testthat)
   CONFIG$ROWS  <- 5
   attach(CONFIG, warn.conflicts = FALSE)
   rm(CONFIG)
+# debugonce(sql_render)
   sql <- sql_render( tmpl )
   expect_identical( sql, 'select * from t5  where ROWNUM <= 5')
 
-# FROM SOURCE
+
+# READ SQL
+# debugonce(sql_render)
+  TABLE <- 't6'
+  ROWS  <- 6
   sql <- sql_render( "select.sql")
-  expect_identical( sql, 'select * from t5  where ROWNUM <= 5')
+  expect_identical( sql, 'select * from t6  where ROWNUM <= 6')
 
 # SOURCE
-  rm(sql)
-  source( "sql.r", local=TRUE)
-  expect_identical( sql, 'select * from t5  where ROWNUM <= 5')
+#   rm(sql)
+    TABLE <- 't7'
+    ROWS  <- 7
+    source( "sql.r", local=TRUE)
+    expect_identical( sql, 'select * from t7  where ROWNUM <= 7')
 
 # CLEANUP
   detach( CONFIG )
