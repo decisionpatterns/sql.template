@@ -4,7 +4,8 @@
     pkgname ,
     "-" ,
     utils::packageVersion(pkgname, libname),
-    " provided by Decision Patterns" ,
+    " - Copyright \u00a9 ", substr(Sys.Date(),1,4),
+    " Decision Patterns" ,
     domain = NA
   )
 
