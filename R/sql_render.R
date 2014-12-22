@@ -75,11 +75,10 @@ sql_render <-function(
   if( length(tags) > 1 )
     stop( "sql_render does not yet support multiple tags.")
 
-
   if( render ) {
     sql <- gsub( "--r:", "", sql )
     if( is.null(data) )
-      sql <- whisker::whisker.render( sql, data=whisker.tools::whisker_get_all(sql, envir=parent.frame() ) ) else
+      sql <- whisker::whisker.render( sql, data=whisker.tools::whisker_get_all(sql, envir=parent.frame(4) ) ) else
       sql <- whisker::whisker.render( sql, data=data )
   }
 
