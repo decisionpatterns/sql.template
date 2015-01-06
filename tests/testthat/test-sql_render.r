@@ -49,7 +49,7 @@ library(testthat)
 # debugonce(sql_render)
   TABLE <- 't6'
   ROWS  <- 6
-  sql <- sql_render( "select.sql")
+  sql <- sql_render( "select-1.sql")
   expect_identical( sql, 'select * from t6  where ROWNUM <= 6')
 
 # SOURCE

@@ -4,7 +4,7 @@
 \alias{sql_render}
 \title{Render SQL template}
 \usage{
-sql_render(sql, data = NULL, tags = "r", strip.comments = TRUE,
+sql_render(sql, data = NULL, tags = "r", strip.comments = FALSE,
   render = TRUE)
 }
 \arguments{
@@ -18,16 +18,7 @@ the call stack.}
 \item{tags}{character; list of tags to uncomment.  Default: "r"}
 
 \item{strip.comments}{logical; whether to strip comments from sql;
-Default: TRUE
-
-Reads in a SQL statements, renders it using \code{whisker}. If \code{sql} is
-character that matches a file on the file system this is read, otherwise
-\code{character} is taken a a literal statement. \code{sql} can also be a
-connection object.
-
-Strips tags, renders variables and returns the variable
-
-\code{sql_render} makes no attempt to determine if resulting SQL is valid SQL.}
+Default: TRUE}
 
 \item{render}{logical; whether to make a template replacement using
 \code{whisker.render} (DEFAULT:TRUE)}
@@ -37,7 +28,58 @@ character; a SQL statement that can then be passed to a DATABASE
 connection
 }
 \description{
-Read SQL and substitute parameters
+Read SQL and substitute parameters, use tags to allow for programatic
+functionality.
+}
+\details{
+\code{sql_render} renders a SQL template by substituting values for the
+whisker tags.
+
+Strips tags, renders variables and returns the text.
+
+\code{sql} can either be 1) a connection object 2) a character vector of
+length one that is a path to a file on file system or 3) a character
+vector containing a SQL statement. The last of these is assumed if the first
+two cannot be satisfied.  Both the connection and the file are read using
+\code{\link[base]{readLines}}.
+In all cases the SQL statements are collapsed to a string (character vector
+of length 1) before further processing.
+
+\code{data} can be a list or environment that provides the values to be
+substituted.  See \code{whisker.render} for complete details.
+
+When set to \code{FALSE}, \code{render} will prevent rendering of the
+template and pass-through the SQL unaltered. This is useful mainly for
+debugging.
+}
+\note{
+\code{sql_render} makes no attempt to determine if resulting SQL is valid SQL.
+}
+\section{Variable Substitution}{
+
+
+The SQL are rendered it using \code{\link[whisker]{whisker.render}} using the
+values provided in \code{data} or the \code{parent.frame} if data is not
+provided.
+}
+
+\section{Uncommenting}{
+
+
+Tagged comments allow the user to implement additional functionality
+at run-time. This allows queries to be shared by multiple functions.
+For example, a query might be used in a bulk operation operating on all
+records or an iterative procedure where a subset of records are used.
+
+Comments are uncommeted by tags.  By default, the tag is {{r}}; comments
+that have this tag are "uncommented". For example,
+{{--r:}} is removed from the file, {{/*r: ... */}} is replaced by {{...}}
+
+This interface may change in the future.
+
+
+The combination of substitution and uncommenting allows queries to be shared
+among a variety of functions.
 }
 \examples{
 sql = "select * from {{table}}"
