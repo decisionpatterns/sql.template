@@ -9,7 +9,7 @@ sql_render(sql, data = NULL, tags = "r", strip.comments = FALSE,
 }
 \arguments{
 \item{sql}{character or connection object; Can be path to \code{SQL} file,
-raw SQL or a connection object.}
+raw SQL or a connection object, See \code{\link{read.sql}} for details.}
 
 \item{data}{environment, list or named vector. Locations to search for values
 to substitute into the query. The default, \code{NULL} finds the names from
@@ -96,6 +96,7 @@ sql = "select * from {{table}}"
   }
 }
 \seealso{
-\code{\link[whisker]{whisker.render}} \cr
+\code{\link{read.sql}} \cr
+  \code{\link[whisker]{whisker.render}} \cr
 }
 

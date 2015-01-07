@@ -1,6 +1,11 @@
 library(testthat)
+library(sql.template)
+
+context('sql_render')
+
 
   rm( list=ls() )
+  prefix <- if( interactive() )  "tests/testthat" else ""
 
 # VALUES FROM LIST
   tmpl <- "select * from {{TABLE}}"
@@ -52,12 +57,18 @@ library(testthat)
   sql <- sql_render( "select-1.sql")
   expect_identical( sql, 'select * from t6  where ROWNUM <= 6')
 
-# SOURCE
+# SOURCE FROM ANOTHER FILE
 #   rm(sql)
     TABLE <- 't7'
     ROWS  <- 7
     source( "sql.r", local=TRUE)
     expect_identical( sql, 'select * from t7  where ROWNUM <= 7')
+
+
+# MULTILINE COMMENTS
+# SOURCE
+  sql <- sql_render( file.path(prefix, "select-2.sql") )
+
 
 # CLEANUP
   detach( CONFIG )

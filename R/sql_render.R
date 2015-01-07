@@ -4,7 +4,7 @@
 #' functionality.
 #'
 #' @param sql character or connection object; Can be path to \code{SQL} file,
-#' raw SQL or a connection object.
+#' raw SQL or a connection object, See \code{\link{read.sql}} for details.
 #'
 #' @param data environment, list or named vector. Locations to search for values
 #' to substitute into the query. The default, \code{NULL} finds the names from
@@ -71,7 +71,9 @@
 #' connection
 #'
 #' @seealso
+#'   \code{\link{read.sql}} \cr
 #'   \code{\link[whisker]{whisker.render}} \cr
+#'
 #'
 #' @examples
 #'
@@ -99,25 +101,8 @@ sql_render <-function(
     sql, data=NULL, tags="r", strip.comments = FALSE,  render=TRUE
 ) {
 
-  # FILE -> CHARACER
-  if( is.character(sql) && length(sql) == 1 && file.exists(sql) )
-    # stmt <- Reduce( paste, paste0( readLines( sql ), "\n" ) )
-    sql <- readLines(sql)
-    # stmt <- paste0( sql, collapse="\n")
 
-  # CONNECTION -> CHARACTER
-  if( is(sql, "connection") )
-    sql <- readLines( sql )
-
-  # SQL IS UNIDENTIFIED
-  if( ! is.character(sql) )
-    stop( "'sql' is neither type character or a connection object.")
-
-
-  # SQL IS CHARACER
-
-  stmt <- paste0( sql, collapse="\n" )
-
+  stmt <- read.sql( sql, collapse="\n" )
 
   # sql <- gsub( "\\/\\*.*?\\*\\/", "", sql)  # strip comments
   stmt <- gsub( "^\\s*", "", stmt )           # remove leading white-space
