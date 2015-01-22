@@ -64,7 +64,7 @@
 #' @note
 #' \code{sql_render} makes no attempt to determine if resulting SQL is valid SQL.
 #'
-#' @return character; a SQL statement that can then be passed to a DATABASE
+#' @return sql; a SQL statement that can then be passed to a DATABASE
 #' connection
 #'
 #' @seealso
@@ -135,6 +135,8 @@ sql_render <-function(
 
   stmt <- gsub( "^\\s*", "", stmt )           # remove leading white-space
   stmt <- gsub( "\\s*$", "" ,stmt )           # remove trailing white-space
+
+  stmt <- sql(stmt)
 
   return(stmt)
 

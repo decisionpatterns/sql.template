@@ -30,7 +30,7 @@ it is \code{TRUE}}
 \item{...}{aditional arguments supplied to \code{\link{sql_read}}}
 }
 \value{
-character; a SQL statement that can then be passed to a DATABASE
+sql; a SQL statement that can then be passed to a DATABASE
 connection
 }
 \description{
