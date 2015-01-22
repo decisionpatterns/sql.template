@@ -33,7 +33,7 @@ sql <- function(x) {
   if( ! is.character(x) ) stop( "x must be a character vector" )
   x <- paste0(x, collapse = "\n")
 
-  class(x) <- append( "sql", "character" )
+  class(x) <- append( class(x), "sql" )
 
   return(x)
 
