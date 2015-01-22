@@ -49,10 +49,14 @@ sql_strip_comments <- function(sql, block = TRUE, inline = TRUE, ...) {
   if(block)
     sql <- gsub( "(?s) ?\\/\\*.*?\\*\\/", '', sql, perl=TRUE )
 
+  
   # STRIP '--' style comments
-  if(inline)
-    sql <- gsub( "(?m) ?--.*([\\n$])", "\\1", sql, perl = TRUE )   # strip '--' style comments
-
+  #  If removal results in a completely blamk line remove it. Otherwise just
+  #  remove the comment
+  if(inline) { 
+    sql <- gsub( "(?m)^\\s?--.*([\\n$\\z])", "", sql, perl = TRUE )   # strip and remove line
+    sql <- gsub( "(?m) ?--.*([\\n$\\z])", "\\1", sql, perl = TRUE )   # strip retain line
+  }
 
   # REMOVE MULTIPLE SPACES?
 
