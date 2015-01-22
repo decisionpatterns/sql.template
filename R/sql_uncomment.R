@@ -90,7 +90,7 @@ sql_uncomment <- function(
     # INLINE COMMENTS
     # stmt <- gsub( paste0(" --", tags, ":"), " --", stmt)  # FIX whitespace replace two spaces preceding comment with one
     if( inline ) {
-      pattern <- paste0( "--", tag )
+      pattern <- paste0( "--", tag, " *" )
       stmt    <- gsub( pattern, "", stmt )
     }
 
