@@ -6,21 +6,20 @@
 \alias{sql.template-package}
 \title{sql.template - lightweight SQL templating engine}
 \description{
-\strong{sql.template} is a simple, mustache-based SQL templating library. It
-allows  writing syntactically valid SQL that can execute as-is and
+\strong{sql.template} is a simple, moustache-based SQL templating library. It
+allows writing syntactically valid SQL that can execute as-is and
 simultaneously support injection of values programattically before sending
-the query for execution. It can:
+the query for execution. It has three main functions
 
 \itemize{
   \item substitution using \code{whisker} templates
-  \item tags that allow for unmasking of SQL templating code
+  \item tags that allow for unmasking/uncommenting of SQL templating code
   \item read SQL from any connection-type object such as a file.
 }
 
-This is accomplished using the \strong{\code{\link{sql_render}}} function.
-
-The package was designed so that the developers could share SQL code with
-other developers from a shared or forked repository.
+The package was designed so that the developers could share SQL code between
+developers from a shared or forked repository. It is very amenable to use
+with any of the R piping libraries.
 }
 \examples{
 sql = "
@@ -47,6 +46,7 @@ cat( sql )
   \url{https://github.com/edwindj/whisker}
 }
 \seealso{
-\link{sql_render}
+\link{sql} \cr
+  sqlutils: \url{https://github.com/jbryer/sqlutils} \cr
 }
 

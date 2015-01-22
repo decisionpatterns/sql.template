@@ -1,7 +1,7 @@
 Package: sql.template
 Title: Light-weight, mustache-based SQL templating
-Version: 0.5.1
-Date: 2015-01-06
+Version: 0.6
+Date: 2015-01-21
 Authors@R: "Christopher Brown <chris.brown@decisionpatterns.com> [aut, cre]"
 Description: Provides a very simple-to-use SQL templating system based on
     mustache (whisker) templates. SQL templates are syntactically, correct SQL

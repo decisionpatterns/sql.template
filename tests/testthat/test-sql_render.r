@@ -22,7 +22,7 @@ context('sql_render')
 
 # REPLACE COMMENTS
   tmpl <- "select * from {{TABLE}} --r: where ROWNUM <= {{ROWS}}"
-  sql  <- sql_render( tmpl, list(TABLE = "table_3", ROWS = 3 ) )
+  sql  <- sql_render( tmpl, list(TABLE = "table_3", ROWS = 3 ), tags="r" )
   expect_identical( sql, 'select * from table_3  where ROWNUM <= 3' )
 
 
@@ -34,7 +34,7 @@ context('sql_render')
   tmpl <- "select * from {{TABLE}} --r: where ROWNUM <= {{ROWS}}"
   TABLE <- "t4"
   ROWS <- 4
-  sql <- sql_render( tmpl )
+  sql <- sql_render( tmpl, tags="r" )
   expect_identical( sql, 'select * from t4  where ROWNUM <= 4' )
 
 # FROM search path
@@ -45,6 +45,7 @@ context('sql_render')
   CONFIG$ROWS  <- 5
   attach(CONFIG, warn.conflicts = FALSE)
   rm(CONFIG)
+  options( sql.tags = 'r')
 # debugonce(sql_render)
   sql <- sql_render( tmpl )
   expect_identical( sql, 'select * from t5  where ROWNUM <= 5')
@@ -54,15 +55,8 @@ context('sql_render')
 # debugonce(sql_render)
   TABLE <- 't6'
   ROWS  <- 6
-  sql <- sql_render( "select-1.sql")
+  sql <- sql_render( sql_read( "select-1.sql") )
   expect_identical( sql, 'select * from t6  where ROWNUM <= 6')
-
-# SOURCE FROM ANOTHER FILE
-#   rm(sql)
-    TABLE <- 't7'
-    ROWS  <- 7
-    source( "sql.r", local=TRUE)
-    expect_identical( sql, 'select * from t7  where ROWNUM <= 7')
 
 
 # MULTILINE COMMENTS
@@ -72,3 +66,5 @@ context('sql_render')
 
 # CLEANUP
   detach( CONFIG )
+  options(sql.tags=NULL)
+
