@@ -136,6 +136,9 @@ sql_render <-function(
   stmt <- gsub( "^\\s*", "", stmt )           # remove leading white-space
   stmt <- gsub( "\\s*$", "" ,stmt )           # remove trailing white-space
 
+  stmt <- gsub( "(m?)\\n\\s+\\n", "\n", stmt )# Remove superfluous whitespace
+
+
   stmt <- sql(stmt)
 
   return(stmt)
