@@ -2,7 +2,7 @@
 % Please edit documentation in R/sql_render.R
 \name{sql_render}
 \alias{sql_render}
-\title{Render moustache-style SQL template}
+\title{Render mustache-style SQL template}
 \usage{
 sql_render(sql, data = NULL, tags = getOption("sql.tags"),
   strip.comments = if (!is.null(getOption("sql.strip.comments")))

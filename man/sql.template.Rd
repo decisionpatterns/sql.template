@@ -6,7 +6,7 @@
 \alias{sql.template-package}
 \title{sql.template - lightweight SQL templating engine}
 \description{
-\strong{sql.template} is a simple, moustache-based SQL templating library. It
+\strong{sql.template} is a simple, mustache-based SQL templating library. It
 allows writing syntactically valid SQL that can execute as-is and
 simultaneously support injection of values programattically before sending
 the query for execution. It has three main functions

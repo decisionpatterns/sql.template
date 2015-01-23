@@ -31,7 +31,7 @@
 #' @seealso
 #'   For finer contol of stipping comments see: \code{\link{sql_strip_comments}}. \cr
 #'
-#'   For rendering a moustache style SQL template see: \code{\link{sql_render}} \cr
+#'   For rendering a mustache style SQL template see: \code{\link{sql_render}} \cr
 #'
 #'   \code{\link{sql}} \cr
 #'   \code{\link[base]{readLines}}

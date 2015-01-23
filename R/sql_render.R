@@ -1,4 +1,4 @@
-#' Render moustache-style SQL template
+#' Render mustache-style SQL template
 #'
 #' Read SQL and substitute parameters, use tags to allow for programatic
 #' functionality.
