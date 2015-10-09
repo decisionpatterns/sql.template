@@ -19,7 +19,7 @@
 #'
 #'
 #' @note
-#'   \code{sql_read} is an alias for \code{sql_read}. The latter aligns with the
+#'   \code{read.sql} is an alias for \code{sql_read}. The latter aligns with the
 #'   conventions of this package, i.e. exported functions are prefixed with
 #'   \code{sql_}, while the former conforms to the conventions of base R where
 #'   functions for reading data begin with \code{read.}. The developer is free

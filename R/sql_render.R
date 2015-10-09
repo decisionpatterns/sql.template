@@ -8,7 +8,7 @@
 #'
 #' @param data environment, list or named vector. Locations to search for values
 #' to substitute into the query. The default, \code{NULL} finds the names from
-#' the call stack.
+#' the call stack/search path.
 #'
 #' @param tags character; list of tags to uncomment. See
 #' \code{\link{sql_uncomment}}. The default, \code{NULL} does not perform any
@@ -96,13 +96,10 @@
 
 sql_render <-function(
       sql
-    , data=NULL
-    , tags=getOption('sql.tags')
-    , strip.comments =
-        if( ! is.null( getOption('sql.strip.comments') ) )
-          getOption('sql.strip.comments') else
-          TRUE
-    ,  render=TRUE
+    , data = NULL
+    , tags = getOption('sql.tags')
+    , strip.comments = getOption('sql.strip.comments', TRUE )
+    , render = TRUE
     , ...
 ) {
 
@@ -116,10 +113,9 @@ sql_render <-function(
 
   stmt <- sql(sql)
 
-
   # 1. UNCOMMENT
   if( ! is.null(tags) )
-    stmt <- sql_uncomment( stmt, tags = tags, ... )
+    stmt <- sql_uncomment( stmt, tags=tags, ... )
 
 
   # 2. STRIP COMMENTS

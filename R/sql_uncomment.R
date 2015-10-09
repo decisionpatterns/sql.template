@@ -1,7 +1,7 @@
-#' Uncomment comments in SQL statements
+#' Uncomment comments in SQL statements by tags
 #'
-#' Uncomment comments in SQL statements allowing for specific tagged comments to
-#' change
+#' Uncomment comments in SQL statements allowing for specific tagged comments
+#' to change
 #'
 #' @param x character or sql object; if character, it is first coerced to SQL
 #'
@@ -13,6 +13,7 @@
 #'
 #' @param inline logical; uncomment inline (-- ...) comments. Default: TRUE
 #'
+#' @details
 #' \code{sql_uncomment} is \strong{not} the same as
 #' \code{\link{sql_strip_comments}} which completely removes comments from a
 #' SQL statement.
@@ -20,7 +21,7 @@
 #' \code{sql_uncomment} removes comment delimiters so that comments
 #' that normally skipped will be evaluated by a SQL engine.
 #'
-#' By default, \strong{all} comments are uncommented, But setting the global
+#' By default, \strong{all} comments are uncommented, setting the global
 #' option \code{sql.tag} or passing an argument to \code{tags} will uncomment
 #' only tagged comments.
 #'
@@ -59,11 +60,12 @@
 #'
 #'   sql <- "SELECT col a /*, col b */ FROM table"
 #'   sql_uncomment( sql )
+#'
 #' @export
 
 sql_uncomment <- function(
     x
-  , tags = if( ! is.null(getOption('sql.tags')) )  getOption('sql.tags') else ""
+  , tags=if( ! is.null(getOption('sql.tags')) )  getOption('sql.tags') else ""
 # NB: The resaon NULL is not used in the tags is that NULL does not exist in
 # vectors NA is a possibility here.
   , block = TRUE
