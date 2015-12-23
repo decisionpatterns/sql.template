@@ -20,7 +20,8 @@
 #'
 #' @seealso
 #'   \link{sql} \cr
-#'   sqlutils: \url{https://github.com/jbryer/sqlutils} \cr
+#'   sqlutils: \url{https://github.com/jbryer/sqlutils} for an alternative
+#'   approach\cr
 #'
 #' @examples
 #'
@@ -31,18 +32,17 @@
 #'   {{table}}
 #' WHERE
 #'   1 == 1
-#' --r: FIRST_NAME = '{{first_name}}'
+#' --fn: and FIRST_NAME = '{{first_name}}' /*ln: and LAST_NAME = '{{last_name}}'*/
 #' "
 #'
-#' sql <- sql_render(
-#'     sql
-#'   , list( table = "table_1", first_name = "Barack" )
-#'   , render=TRUE
-#' )
+#' replacement <- list( table = "pres", first_name = "Barack", last_name = "Obama" )
 #'
-#' cat( sql )
+#' # COMPARE THE FOLLOWING:
 #'
-#'
+#' sql_render( sql, replacement, render=FALSE, strip.comments = FALSE )
+#' sql_render( sql, replacement )      # render
+#' sql_render( sql, replacement, "fn" ) # render 'fn' tags
+#' sql_render( sql, replacement, c("fn","ln") ) # render 'fn' tags
 #'
 #' @references
 #'   \url{http://en.wikipedia.org/wiki/Mustache_(template_system)} \cr

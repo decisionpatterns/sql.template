@@ -16,7 +16,7 @@ see \code{\link{sql}} and \code{\link{sql_read}}}
 to substitute into the query. The default, \code{NULL} finds the names from
 the call stack/search path.}
 
-\item{tags}{character; list of tags to uncomment. See
+\item{tags}{character; list of tags to \strong{uncomment}. See
 \code{\link{sql_uncomment}}. The default, \code{NULL} does not perform any
 uncommenting.}
 

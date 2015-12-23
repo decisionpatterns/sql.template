@@ -10,7 +10,7 @@
 #' to substitute into the query. The default, \code{NULL} finds the names from
 #' the call stack/search path.
 #'
-#' @param tags character; list of tags to uncomment. See
+#' @param tags character; list of tags to \strong{uncomment}. See
 #' \code{\link{sql_uncomment}}. The default, \code{NULL} does not perform any
 #' uncommenting.
 #'
