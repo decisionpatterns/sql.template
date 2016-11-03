@@ -25,20 +25,21 @@
 #'   functions for reading data begin with \code{read.}. The developer is free
 #'   to follow the convention of this package or base R.
 #'
-#' @return an object of class sql, i.e. string (character) containing a SQL
-#' statement
+#' @return
+#'   an object of class sql, i.e. string (character) containing a SQL
+#'   statement
 #'
 #' @seealso
 #'   For finer contol of stipping comments see: \code{\link{sql_strip_comments}}. \cr
 #'
-#'   For rendering a mustache style SQL template see: \code{\link{sql_render}} \cr
+#'  For rendering a mustache style SQL template see: \code{\link{sql_render}} \cr
 #'
-#'   \code{\link{sql}} \cr
-#'   \code{\link[base]{readLines}}
+#'  \code{\link{sql}} \cr
+#'  \code{\link[base]{readLines}}
 #'
 #' @examples
 #'   \dontrun{
-#'      sql_read( "path/to/file )
+#'      sql_read( "path/to/file" )
 #'      sql_read( connection )
 #'   }
 #'
