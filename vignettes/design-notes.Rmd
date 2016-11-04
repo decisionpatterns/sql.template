@@ -1,0 +1,215 @@
+---
+title: "Design Notes: sql.template"
+author: "Christopher Brown"
+date: "December 23, 2015"
+output: html_document
+---
+
+The relevant feaures and design notes of SQLXXX are discussed below
+
+## Features
+
+SQLXXX has the following FEATURES.
+
+- Files are:
+  - plain text
+  - valid SQL -- run as-is, as a default query
+- Multi-purpose; simple logic allow for for multiple uses
+- Portable to different application and languages that use the SQLXXX syntax
+  - Reduce inconsistencies across applications
+- Patterned after existing standards
+  - Markdown  
+  - Whisker
+- STRICT or PERMISSIVE: can warn or raise errors if constraints are not supplied
+
+  
+## Key Functions 
+
+ - sql_read
+ - sql_render
+ - sql_uncomment
+ - sql_strip_comments
+
+
+## Background
+
+Any SQL template solution needs to provide two capabilities:
+
+- parameter substitution with variable checking
+- conditional logic, e.g. only print if 
+  - ? Only print line if variable substitutes
+  - Default is strict: check vars / prior to substitutubs 
+- mask/unmask
+  - ? Only print line if varaible substitutes
+
+
+### Parameter Subsitution
+
+Mustache (via the whisker/whisker.tools packages) is the easiest and probably 
+most ubiquitous way to do parameter substitution.
+
+    SQL Template:
+        SELECT * 
+        FROM table 
+        WHERE name = {{name}}
+     
+    Hash:
+        {"name": "foo"}
+
+Parameter substitution will not work if: 
+- foo valid: performs substition
+- foo missing: raises error
+- foo FALSE: 
+
+ 
+
+```{r}
+# These are really tests 
+tmpl <- "SELECT * FROM TABLE WHERE name = '{{name}}'"
+data <- fromJSON('{"name": "foo"}')
+
+data1 = list( name = "foo" )
+data2 = list( name = FALSE )
+data3 = list() 
+data4 = list( other_name = "roger") 
+
+whisker.render(tmpl,data1)  # Shown  # Works 
+whisker.render(tmpl,data2)  # FALSE not-shown
+whisker.render(tmpl,data3)  # DOES not-sexist
+whisker.render(tmpl,data4)  # No substitution
+
+```
+
+
+## (Un)Masking  
+
+The second part of a sql template needs to support conditional logic, namely 
+turning on or off logic.  This can surprisingly be done with 
+
+To get whisker to work as a template engine, we need to have a convention for using 
+comments to indicate 
+
+    Template:
+      SELECT
+        A  
+        --#foo:, B  -- RENDERS IF DEFINED OTHERWISE NOT
+      FROM table 1
+     
+    Hash:
+       { "foo" : true }   
+
+  
+
+Here, two things special are done.
+```{r}
+tmpl <- "
+      SELECT
+        A,  
+        --foo: B,  -- RENDERS IF DEFINED OTHERWISE NOT
+      FROM table 1
+"
+
+sql.template::sql_render( tmpl, list(foo=TRUE) )
+
+```
+
+## Poor interface
+
+*sql.template* is poorly designed. It requires two arguments to *sql_render* to render text:
+
+* `tags = ...` determine what is uncommented 
+* `data` determines that is rendered
+
+It may be possible to perform both in one step by using only the `data` argument. If the value is exists/than the line should be uncommented.
+
+
+# Order of operations
+
+Current: Uncomment, substitute, strip ...
+
+Proposed: Preform all substitutions first! 
+* substitute 
+* uncomment 
+* strip remaining comments (optional)
+
+# Functionality
+
+sql.template provides for the following functionality:
+
+* Uncommenting, especially 
+** SELECT clause to select more columns 
+** WHERE clause to filter rows
+
+* Parameter substitute using mustache
+
+* BOTH 
+
+
+## Uncommenting 
+
+Uncommenting can be activated if/when a value exists in data. For example:
+
+  - Evaluate a condition in line to true in 
+    /*{{TRUE}}: some sql */   --> some sql  
+    --{{TRUE}}: some sql      --> some sql 
+    
+    If whisker.render if the variable does not exist, nothing is inserted 
+    --r: --> --: (which is a nice way to indicate that nothing was substituted.)
+    
+Parameterized comments are uncommented if the value is evaluated.      
+
+### Uses separet parameters:    
+
+    /*{{filter_a}}: AND a = {{a}} */
+    --{{filter_b}}: AND b = {{b}}
+    
+    
+    data=list( filter_a=TRUE, filter_b=FALSE )
+    
+
+# Using the parameter alone 
+
+This is the perfered method
+
+    --{{r}}: AND r = {{r}}
+    /*r: ... */ 
+    
+    data = list( r = 1 )
+    
+NOTE: list( r=FALSE ) will also get rendered.
+
+
+## Required Changes
+
+### Order of operations
+
+Currently, sql.template uncommented then substitutes. This will have to change. 
+
+    
+   
+    
+## Alternatives
+
+* No parameters, parameter sets/unsets the SQL statement
+
+    SELECT 
+        name
+      /**{{TRUE}}, date**/
+    FROM TABLE 
+    
+    WHERE 
+      1 = 1 
+      AND NAME = {{NAME}}
+
+* Parameter can be filled -> gets filled 
+* Multiple parameters defined.
+
+
+### Most desirable
+
+The most desirable situation is to have a SQL parser that can turn a basic SQL
+statement into a code structure that can subsequently get modified. 
+
+   "Select * from table" %>% where( name = "Fred" )
+   
+I don't believe that `dplyr` provides this interface. *sql.template* uncommenting is a work-around this feature.    

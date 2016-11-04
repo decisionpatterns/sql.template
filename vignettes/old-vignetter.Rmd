@@ -1,0 +1,95 @@
+---
+title: "Rendering SQL in a command-line situation"
+author: "Christopher Brown"
+date: "December 22, 2015"
+output: html_document
+---
+
+* Q: How do you render SQL in a command-line situation.
+
+In one sense, *sql.template* is poorly designed. It requires both an argument to 
+sql_render, i.e. `tags = ...` to determine what to uncomment as well as data.  
+
+Probably a better way to do it is that if there is a value in data, that line is
+uncommented. For example:
+
+    SELECT 
+      {{}}
+ 
+# Order of operations
+
+Current: Uncomment, substitute, strip ...
+Proposed: substitute + uncomment ... strip (if remaining)
+
+
+
+# Functions
+
+* Uncomment in 
+** SELECT clause to select more columns 
+** WHERE clause to filter rows
+
+* Substitute parameters {{}
+}
+* BOTH 
+
+* Uncomment multiline 
+
+# Uncommenting, activate conditions by 
+
+  - Evaluate a condition in line to true in 
+    /*{{TRUE}}: some sql */   --> some sql  
+    --{{TRUE}}: some sql      --> some sql 
+    
+    If whisker.render if the variable does not exist, nothing is inserted 
+    --r: --> --: (which is a nice way to indicate that nothing was substituted.)
+    
+Parameterized comments are uncommented if the value is evaluated.      
+Do the values in whisker     
+    
+# Parameters:    
+    /*{{filter_a}}: AND a = {{a}} */
+    --{{filter_b}}: AND b = {{b}}
+    
+
+# Using a parameter to     
+    --{{r}}: AND r = {{r}}
+    
+# Order:
+
+    Currently, SQL is uncommented then 
+    
+    --actually, it simply has to evaluate to any value.      
+    
+    list( filter_a=TRUE, filter_b=FALSE )
+    
+   
+    
+    This is equivalent to the code fence in RMarkdown
+  - 
+
+```{r}
+
+```
+
+
+* No parameters, parameter sets/unsets the SQL statement
+
+    SELECT 
+        name
+      /**{{TRUE}}, date**/
+    FROM TABLE 
+    
+    WHERE 
+      1 = 1 
+      AND NAME = {{NAME}}
+
+* Parameter can be filled -> gets filled 
+* Multiple parameters defined.
+
+
+# Most desirable
+
+This is a dplyr type interface: 
+
+"Select * from table" %>% filter( name = "Fred" )
