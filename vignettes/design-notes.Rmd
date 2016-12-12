@@ -5,7 +5,10 @@ date: "December 23, 2015"
 output: html_document
 ---
 
-The relevant feaures and design notes of SQLXXX are discussed below
+SQLTemplate is an application of [Mustache](https://mustache.github.io/)"logic-less templates" to Structured Query Language with a few added added enhancments. In 
+additions to the benefits of Mustache, SQL templates provides a features to 
+activate parts of a SQL Template. This features promotes the query reuse and 
+sharing by different users, programs, languages and applications.  
 
 ## Features
 
@@ -14,33 +17,35 @@ SQLXXX has the following FEATURES.
 - Files are:
   - plain text
   - valid SQL -- run as-is, as a default query
-- Multi-purpose; simple logic allow for for multiple uses
+- Multi-purpose; simple logic allow for use from multiple languages/applications
 - Portable to different application and languages that use the SQLXXX syntax
   - Reduce inconsistencies across applications
 - Patterned after existing standards
-  - Markdown  
-  - Whisker
+  - SQL 
+  - [Mustache](https://mustache.github.io/)
 - STRICT or PERMISSIVE: can warn or raise errors if constraints are not supplied
 
   
 ## Key Functions 
 
- - sql_read
- - sql_render
- - sql_uncomment
- - sql_strip_comments
+ - sql_read : Read SQL statement from a connection or string
+ - sql_render : like whisker render, parse the template and substitute values 
+   from key-value pairs 
+ - sql_activate : Activate (uncomment) part(s) of a SQL template
+ - sql_strip_comments : Strip comments from a SQL STATEMENT
 
 
 ## Background
 
-Any SQL template solution needs to provide two capabilities:
+Strictly speaking any SQL template solution needs to provide several 
+capabilities:
 
-- parameter substitution with variable checking
-- conditional logic, e.g. only print if 
+- parameter substitution 
+- variable checking 
+- conditional logic / query activation ...
+  - e.g. only print if 
   - ? Only print line if variable substitutes
   - Default is strict: check vars / prior to substitutubs 
-- mask/unmask
-  - ? Only print line if varaible substitutes
 
 
 ### Parameter Subsitution
@@ -81,7 +86,7 @@ whisker.render(tmpl,data4)  # No substitution
 ```
 
 
-## (Un)Masking  
+## (Un)Masking, unmasking, activating 
 
 The second part of a sql template needs to support conditional logic, namely 
 turning on or off logic.  This can surprisingly be done with 
@@ -213,3 +218,41 @@ statement into a code structure that can subsequently get modified.
    "Select * from table" %>% where( name = "Fred" )
    
 I don't believe that `dplyr` provides this interface. *sql.template* uncommenting is a work-around this feature.    
+
+
+# DPLY vs SQLTemplate
+
+One comment that is often made is why not just use dplyr. To understand the 
+rational, it is important to make some distinction between dplyr and 
+SQLTemplate.
+
+|    dplyr                         |    SQLTemple                 |
+|----------------------------------|------------------------------|
+| Build query using logic pipeline | Build Query in text template |
+|-----------------------------------|------------------------------|
+| Non-transportable code (as of now)| Language/Application agnostic 
+|                                   |  just a standard             |
+
+## DPLYR
+
+- Build your query through a logic pipeline.
+- Non-transportable code (as of now)
+
+## SQLMustache
+
+- Language Independent
+- logic-late
+- Runs and parses as-is. 
+
+    SELECT 
+      name 
+      --addr: addr 
+    FROM 
+      person
+      --addr: INNER JOIN address on personId
+    WHERE 
+      1=1 
+      --addr: AND addr like '%MOCKING BIRD%' 
+  
+
+# TRUTHY VALUES exists, ! NULL, is not empty or NA

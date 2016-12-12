@@ -11,7 +11,7 @@
 #' the call stack/search path.
 #'
 #' @param tags character; list of tags to \strong{uncomment}. See
-#' \code{\link{sql_uncomment}}. The default, \code{NULL} does not perform any
+#' \code{\link{sql_activate}}. The default, \code{NULL} does not perform any
 #' uncommenting.
 #'
 #' @param strip.comments logical; whether to strip comments from sql;
@@ -36,7 +36,7 @@
 #'
 #' @section Uncommenting:
 #'
-#' See \code{\link{sql_uncomment}},
+#' See \code{\link{sql_activate}},
 #'
 #' \code{tags} are used to uncomment SQL comments using. The default is provided
 #' by global option \code{sql.tags}. If unset or \code{NULL}, no uncommenting is
@@ -115,7 +115,7 @@ sql_render <-function(
 
   # 1. UNCOMMENT
   if( ! is.null(tags) )
-    stmt <- sql_uncomment( stmt, tags=tags, ... )
+    stmt <- sql_activate( stmt, tags=tags, ... )
 
 
   # 2. STRIP COMMENTS
@@ -139,4 +139,12 @@ sql_render <-function(
 
   return(stmt)
 
+}
+
+#' @export
+#' @rdname sql_activate
+
+sql_uncomment <- function(...) {
+  warning("sql_uncomment is deprecated.  Use sql_activate instead.")
+  sql_activate(...)
 }
