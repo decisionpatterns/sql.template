@@ -2,7 +2,7 @@ Package: sql.template
 Title: Light-weight, mustache-based SQL templating
 Version: 0.7.3
 Date: 2016-11-03
-License: GPL-2 | file LICENSE
+License: GPL-2
 Authors@R: c(
       person("Christopher", "Brown", , "chris.brown@decisionpatterns.com", c("aut", "cre") ),
       person("Decision Patterns", role = "cph")
@@ -15,14 +15,9 @@ Description: Provides a very simple-to-use SQL templating system based on
 Depends:
     R (>= 3.1.0)
 Suggests:
-    magrittr (>= 1.5),
-    testthat (>= 0.10.0)
-License: GPL-2 | file LICENSE
+    testthat
 Imports:
     whisker (>= 0.3),
     whisker.tools (>= 0.7.1)
-License: GPL-2
 LazyData: true
-Suggests:
-    testthat
-RoxygenNote: 5.0.1.9000
+RoxygenNote: 5.0.1

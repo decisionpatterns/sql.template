@@ -1,7 +1,6 @@
-#' Uncomment comments in SQL statements by tags
+#' Activate (uncomment) Part(s) of a SQL Template
 #'
-#' Uncomment comments in SQL statements allowing for specific tagged comments
-#' to change
+#' Activates (uncomments) Part of a SQL Template based on supplied data.
 #'
 #' @param x character or sql object; if character, it is first coerced to SQL
 #'
@@ -14,11 +13,11 @@
 #' @param inline logical; uncomment inline (-- ...) comments. Default: TRUE
 #'
 #' @details
-#' \code{sql_uncomment} is \strong{not} the same as
+#' \code{sql_activate} is \strong{not} the same as
 #' \code{\link{sql_strip_comments}} which completely removes comments from a
 #' SQL statement.
 #'
-#' \code{sql_uncomment} removes comment delimiters so that comments
+#' \code{sql_activate} removes comment delimiters so that comments
 #' that normally skipped will be evaluated by a SQL engine.
 #'
 #' By default, \strong{all} comments are uncommented, setting the global
@@ -56,14 +55,14 @@
 #'
 #' @examples
 #'   sql <- "SELECT  \n col a \n --, col b \n FROM table"
-#'   sql_uncomment( sql )
+#'   sql_activate( sql )
 #'
 #'   sql <- "SELECT col a /*, col b */ FROM table"
-#'   sql_uncomment( sql )
+#'   sql_activate( sql )
 #'
 #' @export
 
-sql_uncomment <- function(
+sql_activate <- function(
     x
   , tags=if( ! is.null(getOption('sql.tags')) )  getOption('sql.tags') else ""
 # NB: The resaon NULL is not used in the tags is that NULL does not exist in

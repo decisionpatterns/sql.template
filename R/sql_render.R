@@ -4,14 +4,14 @@
 #' functionality.
 #'
 #' @param sql either a connection or character string;
-#' see \code{\link{sql}} and \code{\link{sql_read}}
+#' see [sql()] and [sql_read()]
 #'
 #' @param data environment, list or named vector. Locations to search for values
 #' to substitute into the query. The default, \code{NULL} finds the names from
 #' the call stack/search path.
 #'
 #' @param tags character; list of tags to \strong{uncomment}. See
-#' \code{\link{sql_uncomment}}. The default, \code{NULL} does not perform any
+#' [sql_activate()]. The default, \code{NULL} does not perform any
 #' uncommenting.
 #'
 #' @param strip.comments logical; whether to strip comments from sql;
@@ -21,7 +21,7 @@
 #' @param render logical; whether to make a template replacement using
 #' \code{whisker.render} (DEFAULT:TRUE)
 #'
-#' @param ... aditional arguments supplied to \code{\link{sql_read}}
+#' @param ... aditional arguments supplied to [sql_read()]
 #'
 #' @details
 #'
@@ -29,47 +29,47 @@
 #' stripping comments followed by substituting template variables using whisker.
 #' The process occurs in that order.
 #'
-#' When set to \code{FALSE}, \code{render} will prevent rendering of the
+#' When set to `FALSE`, `render` will prevent rendering of the
 #' template and pass-through the SQL unaltered. This is useful mainly for
 #' debugging.
 #'
 #'
 #' @section Uncommenting:
 #'
-#' See \code{\link{sql_uncomment}},
+#' See [sql_activate()].
 #'
-#' \code{tags} are used to uncomment SQL comments using. The default is provided
-#' by global option \code{sql.tags}. If unset or \code{NULL}, no uncommenting is
-#' performed.  If an empty character string, \code{""}, is provided, all
+#' `tags` are used to uncomment SQL comments using. The default is provided
+#' by global option `sql.tags`. If unset or `NULL`, no uncommenting is
+#' performed.  If an empty character string, `""`, is provided, all
 #' comments are uncommented.
 #'
 #' @section Comment stripping:
 #'
-#' \code{strip.comments} controls the stripping of comments. It is performed by
-#' \code{\link{sql_strip_comments}}. Since comment stripping occurs after
+#' `strip.comments` controls the stripping of comments. It is performed by
+#' [sql_strip_comments()]. Since comment stripping occurs after
 #' uncommenting, previously uncommented lines are not stripped from the SQL.
 #' The default to strip comments since 1) most operations are believed to be
 #' automatic in nature and 2) any unfound template variables result in a
-#' warning courtesy of \code{whisker.tools}. Thus stripping comments means
+#' warning courtesy of `whisker.tools`. Thus stripping comments means
 #' warnings only occur only from evaluated SQL and not comments.
 #'
 #'
 #' @section Variable Substitution:
 #'
 #' SQL is rendered it using \code{\link[whisker]{whisker.render}} using the
-#' values provided in \code{data} or the \code{parent.frame} by default.
-#' \code{data} can be a list or environment that provides the values to be
+#' values provided in `data` or the `parent.frame` by default.
+#' `data` can be a list or environment that provides the values to be
 #' substituted. If a varaible is not found, an warning is given.
 #'
 #' @note
-#' \code{sql_render} makes no attempt to determine if resulting SQL is valid SQL.
+#' `sql_render` makes no attempt to determine if resulting SQL is valid SQL.
 #'
 #' @return sql; a SQL statement that can then be passed to a DATABASE
 #' connection
 #'
 #' @seealso
-#'   \code{\link{sql_read}} \cr
-#'   \code{\link[whisker]{whisker.render}} \cr
+#'   `\link{sql_read`} \cr
+#'   `\link[whisker]{whisker.render`} \cr
 #'
 #'
 #' @examples
@@ -115,7 +115,7 @@ sql_render <-function(
 
   # 1. UNCOMMENT
   if( ! is.null(tags) )
-    stmt <- sql_uncomment( stmt, tags=tags, ... )
+    stmt <- sql_activate( stmt, tags=tags, ... )
 
 
   # 2. STRIP COMMENTS
@@ -139,4 +139,12 @@ sql_render <-function(
 
   return(stmt)
 
+}
+
+#' @export
+#' @rdname sql_activate
+
+sql_uncomment <- function(...) {
+  warning("sql_uncomment is deprecated.  Use sql_activate instead.")
+  sql_activate(...)
 }
