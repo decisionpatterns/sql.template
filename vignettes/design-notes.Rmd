@@ -5,9 +5,11 @@ date: "December 23, 2015"
 output: html_document
 ---
 
-SQLTemplate is an application of [Mustache](https://mustache.github.io/)"logic-less templates" to Structured Query Language with a few added added enhancments. In 
+SQLTemplate is an application of 
+[Mustache](https://mustache.github.io/)"logic-less templates" to Structured 
+Query Language (SQL) with a few added added enhancments. In 
 additions to the benefits of Mustache, SQL templates provides a features to 
-activate parts of a SQL Template. This features promotes the query reuse and 
+(de)activate parts of a SQL Template. This features promotes the query reuse and 
 sharing by different users, programs, languages and applications.  
 
 ## Features

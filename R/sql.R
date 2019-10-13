@@ -30,10 +30,10 @@ sql <- function(x) {
 
   if( is.sql(x) ) return(x)   # Non-Op
 
-  if( ! is.character(x) ) stop( "x must be a character vector" )
+  if( ! inherits(x, "character") ) stop( "x must be a character vector" )
   x <- paste0(x, collapse = "\n")
 
-  class(x) <- append( class(x), "sql" )
+  class(x) <- append( "sql", class(x) )
 
   return(x)
 
