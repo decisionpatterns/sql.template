@@ -51,11 +51,12 @@ sql_strip_comments <- function(sql, block=TRUE, inline=TRUE, ...) {
 
 
   # STRIP '--' style comments
-  #  If removal results in a completely blamk line remove it. Otherwise just
-  #  remove the comment
+  #  If removal results in a completely blank line remove it. Otherwise just
+  #  remove the comment to the end-of-the-line.
+  # NB: \z is ignored in character class but might be important here.
   if(inline) {
-    sql <- gsub( "(?m)^\\s?--.*([\\n$\\z])", "", sql, perl = TRUE )   # strip and remove line
-    sql <- gsub( "(?m) ?--.*([\\n$\\z])", "\\1", sql, perl = TRUE )   # strip retain line
+    sql <- gsub( "(?m)^\\s?--.*([\\n$])", "", sql, perl = TRUE )   # strip and remove entire line
+    sql <- gsub( "(?m) ?--.*([\\n$])", "\\1", sql, perl = TRUE )   # strip retain line
   }
 
   # REMOVE MULTIPLE SPACES?

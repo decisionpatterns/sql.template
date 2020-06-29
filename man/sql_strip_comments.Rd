@@ -20,31 +20,30 @@ Strip comments from a SQL STATEMENT
 }
 \details{
 \code{sql_strip_comments} removes SQL standard comments from a SQL
-  statement. Both inline (\code{--}) and block (\code{/* ... */}) style
-  comments can be striped independently with the \code{inline} and
-  \code{block} arguments, the default is to strip both style of comments.
-  \code{block} comments are given priority and will remove any nested
-  comments.
+statement. Both inline (\code{--}) and block (\code{/* ... */}) style
+comments can be striped independently with the \code{inline} and
+\code{block} arguments, the default is to strip both style of comments.
+\code{block} comments are given priority and will remove any nested
+comments.
 
-  A single space preceding a comment is also stripped.
+A single space preceding a comment is also stripped.
 }
 \examples{
   # BLOCK COMMENTS
   sql <- "SELECT name /* User Name */ FROM table"
   sql_strip_comments( sql )
 
-  sql <- "SELECT name /* User \\n Name */ FROM table"
+  sql <- "SELECT name /* User \n Name */ FROM table"
   sql_strip_comments( sql )
 
-  sql <- "SELECT\\n first_name, /* User First Name */\\n last_name /* User Last Name */\\n FROM table"
+  sql <- "SELECT\n first_name, /* User First Name */\n last_name /* User Last Name */\n FROM table"
   sql_strip_comments( sql )
 
   # INLINE COMMENTS
-  sql <- "SELECT -- comment \\n A -- col A \\n from \\n table"
+  sql <- "SELECT -- comment \n A -- col A \n from \n table"
   sql_strip_comments( sql )
 
 }
 \seealso{
 \code{\link{sql_read}}
 }
-

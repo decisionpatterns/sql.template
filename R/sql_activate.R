@@ -13,11 +13,11 @@
 #' @param inline logical; uncomment inline (-- ...) comments. Default: TRUE
 #'
 #' @details
-#' \code{sql_activate} is \strong{not} the same as
-#' \code{\link{sql_strip_comments}} which completely removes comments from a
+#' `sql_activate` is **not** the same as
+#' [sql_strip_comments()] which completely removes comments from a
 #' SQL statement.
 #'
-#' \code{sql_activate} removes comment delimiters so that comments
+#' `sql_activate` removes comment delimiters so that comments
 #' that normally skipped will be evaluated by a SQL engine.
 #'
 #' By default, \strong{all} comments are uncommented, setting the global
@@ -31,7 +31,7 @@
 #' For example, a query might be used in a bulk operation operating on all
 #' records or an iterative procedure where a subset of records are used.
 #'
-#' Comments are uncommeted by tags.  By default, the tag is {{""}}, namely all
+#' Comments are uncommeted by tags.  By default, the tag is `""`, namely all
 #' comments.  A common case is to have a part of the where clause be for
 #' development.  For example,
 #' {{--dev: AND user_id = 1}} or {{/*dev: AND user_id = 1 */}}.
@@ -39,10 +39,10 @@
 #' Comments can be  tagged in the SQL code, by placing the tag as the first
 #' letter type character(s) of the query followed by a colon. For example:
 #'
-#' inline: \code{--tag_name:} \cr
-#' block: \code{ /*tag_name: }
+#' inline: `--tag_name:` \cr
+#' block: `/*tag_name:*/`
 #'
-#' A comment can only have one tag.
+#' **A comment can only have one tag.**
 #'
 #' This interface may change in the future.
 #'
@@ -60,6 +60,7 @@
 #'   sql <- "SELECT col a /*, col b */ FROM table"
 #'   sql_activate( sql )
 #'
+#' @md
 #' @export
 
 sql_activate <- function(
@@ -84,7 +85,7 @@ sql_activate <- function(
     # BLOCK comments
     if( block ){
       # stmt <- gsub( paste0( " +?" ))
-      pattern <- paste0(   "(?s) ?\\/\\*", tag, "(.*?)\\*\\/" )  # REGEXP PATTERN
+      pattern <- paste0(   "(?s) ?\\/\\*", tag, "(.*?)\\*\\/" )  # REGEXP PATTERN: /* ... */
       stmt <- gsub( pattern, "\\1", stmt, perl=TRUE )
     }
 

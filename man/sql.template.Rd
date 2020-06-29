@@ -3,7 +3,6 @@
 \docType{package}
 \name{sql.template}
 \alias{sql.template}
-\alias{sql.template-package}
 \title{sql.template - lightweight SQL templating engine}
 \description{
 \strong{sql.template} is a simple, mustache-based SQL templating library. It
@@ -12,9 +11,9 @@ simultaneously support injection of values programattically before sending
 the query for execution. It has three main functions
 
 \itemize{
-  \item substitution using \code{whisker} templates
-  \item tags that allow for unmasking/uncommenting of SQL templating code
-  \item read SQL from any connection-type object such as a file.
+\item substitution using \code{whisker} templates
+\item tags that allow for unmasking/uncommenting of SQL templating code
+\item read SQL from any connection-type object such as a file.
 }
 
 The package was designed so that the developers could share SQL code between
@@ -45,12 +44,11 @@ sql_render( sql, replacement, c("fn","ln") ) # render 'fn' tags
 }
 \references{
 \url{http://en.wikipedia.org/wiki/Mustache_(template_system)} \cr
-  \url{http://mustache.github} \cr
-  \url{https://github.com/edwindj/whisker}
+\url{http://mustache.github} \cr
+\url{https://github.com/edwindj/whisker}
 }
 \seealso{
 \link{sql} \cr
-  sqlutils: \url{https://github.com/jbryer/sqlutils} for an alternative
-  approach\cr
+sqlutils: \url{https://github.com/jbryer/sqlutils} for an alternative
+approach\cr
 }
-
